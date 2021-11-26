@@ -1,10 +1,14 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/home.vue'
-import E404 from '../views/404.vue'
 
 const Router = createRouter({
     history: createWebHashHistory(),
     routes: [
+        {
+            path: '/',
+            name: 'realHome',
+            component: Home
+        },
         {
             path: '/:msg',
             name: 'home',

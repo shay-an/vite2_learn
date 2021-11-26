@@ -1,23 +1,61 @@
-<script setup="props" lang="ts">
-import { ref } from "vue";
+<script setup lang="ts">
+import { ref,onMounted,onBeforeUpdate,reactive,  onUnmounted, toRefs, watch, computed } from "vue";
+
 
 let props = defineProps<{ msg: string }>();
 console.log(props);
 
 const count = ref(0);
-function foo() {
-  console.log(9999);
+const age = ref(0);
+
+function useMousePosition () {
+  // 第一个参数 props
+  // 第二个参数 context，attrs、emit、slots
+  const position = reactive({
+    x: 0,
+    y: 0
+  })
+
+  const update = (e:MouseEvent) => {
+    position.x = e.pageX
+    position.y = e.pageY
+  }
+
+  watch(position,()=>{
+    console.log('position:update')
+  })
+
+  const cmp = computed(()=>{
+    return position.x + position.y
+  })
+
+  onMounted(() => {
+    window.addEventListener('mousemove', update)
+  })
+
+  onBeforeUpdate(()=>{
+    console.log('useMousePosition:update')
+  })
+
+  onUnmounted(() => {
+    window.removeEventListener('mousemove', update)
+  })
+
+  return toRefs({
+    cmp,
+    ...toRefs(position)
+  })
 }
+
+const { x, y, cmp } = useMousePosition()
+
 </script>
 
 <template>
-  <h1 @click="foo">{{ msg }}</h1>
-
+  <h1>{{ msg }}</h1>
+  <span>{{ x }},{{ y }},{{cmp}}</span>
   <p>
-    Recommended IDE setup:
-    <a href="https://code.visualstudio.com/" target="_blank">VSCode</a>
-    +
-    <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
+    {{ age }}
   </p>
 
   <p>See <code>README.md</code> for more information.</p>
