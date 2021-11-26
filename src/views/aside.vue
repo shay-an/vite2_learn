@@ -43,12 +43,16 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+mapState({
+  
+})
 import {
   Location,
   Document,
   Menu as IconMenu,
   Setting,
 } from '@element-plus/icons'
+import { mapState } from 'vuex'
 
 export default defineComponent({
   components: {
@@ -71,3 +75,10 @@ export default defineComponent({
   },
 })
 </script>
+
+<style>
+.el-menu-vertical-demo {
+  height: 100vh;
+  background-color: #545c64;
+}
+</style>
