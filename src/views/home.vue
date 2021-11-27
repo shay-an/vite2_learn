@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref,onMounted,onBeforeUpdate,reactive,  onUnmounted, toRefs, watch, computed } from "vue";
+import { ref,onMounted,onBeforeUpdate,reactive,toRef,  onUnmounted, toRefs, watch, computed } from "vue";
 import { Search, Edit, Check, Message, Star, Delete } from '@element-plus/icons'
+import {  useStore, mapMutations,mapActions } from 'vuex'
 let props = defineProps<{ msg: string }>();
 console.log(props);
 
@@ -15,13 +16,33 @@ function useMousePosition () {
     y: 0
   })
 
+  const store = useStore()
+
+  const { str, arr, obj } = toRefs(store.state)
+  const num = toRef(store.state, 'num');
+
+  const { getNum, getObj } = toRefs(store.getters)
+
+  const { 
+    numMutation,
+    strMutation,
+    objMutation
+    } = mapMutations([
+    'numMutation',
+    'strMutation',
+    'arrMutation',
+    'objMutation'
+    ])
+
+    const { numAction } = mapActions(['numAction'])
+
   const update = (e:MouseEvent) => {
     position.x = e.pageX
     position.y = e.pageY
   }
 
   watch(position,()=>{
-    console.log('position:update')
+    // console.log('position:update')
   })
 
   const cmp = computed(()=>{
@@ -33,20 +54,39 @@ function useMousePosition () {
   })
 
   onBeforeUpdate(()=>{
-    console.log('useMousePosition:update')
+    // console.log('useMousePosition:update')
   })
 
   onUnmounted(() => {
     window.removeEventListener('mousemove', update)
   })
 
-  return toRefs({
+  return {
+    str,
+    num,
+    arr,
+    obj,
+    getNum,
+    getObj,
+    strMutation:strMutation.bind({ $store: store }),
+    numAction:numAction.bind({ $store: store }),
     cmp,
     ...toRefs(position)
-  })
+  }
 }
 
-const { x, y, cmp } = useMousePosition()
+const { x,
+ y,
+cmp,
+str,
+num,
+arr,
+obj,
+getNum,
+getObj,
+strMutation,
+numAction,
+} = useMousePosition()
 
 </script>
 
@@ -93,6 +133,35 @@ const { x, y, cmp } = useMousePosition()
     <el-button type="warning" :icon="Star" circle></el-button>
     <el-button type="danger" :icon="Delete" circle></el-button>
   </el-row>
+   <h4>state.num:</h4>
+  <span>{{ num }}</span>
+  <button @click="numAction(120)">numAction</button>
+  <br />
+
+  <h4>state.str:</h4>
+  <span>{{ str }}</span>
+  <button @click="strMutation('张三')">strMutation</button> <br />
+  <br />
+  <span
+    >state.arr:
+    <h4>{{ arr }}</h4></span
+  >
+  <br />
+  <span
+    >state.obj:
+    <h4>{{ obj }}</h4></span
+  >
+  <br />
+  <span
+    >state.getters.getNum:
+    <h4>{{ getNum }}</h4></span
+  >
+  <br />
+  <span
+    >state.getters.getObj:
+    <h4>{{ getObj }}</h4></span
+  >
+  <br />
 </template>
 
 <style scoped>

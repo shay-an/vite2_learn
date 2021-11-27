@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/home.vue'
+import flex from '../views/flex.vue'
 
 const Router = createRouter({
     history: createWebHashHistory(),
@@ -8,6 +9,12 @@ const Router = createRouter({
             path: '/',
             name: 'realHome',
             component: Home
+        },
+        {
+            path: '/flex',
+            name: 'flex',
+            component: flex,
+            props: true
         },
         {
             path: '/:msg',

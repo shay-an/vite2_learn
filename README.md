@@ -77,3 +77,14 @@ const { x, y, cmp } = useMousePosition()
 
 </script>
 ```
+vuex 在 setup函数内使用 mapActions mapMutations 直接返回映射后的函数会报错，报错大概是在：
+```
+var dispatch = this.$store.dispatch;// this 是undefined
+```
+解决办法：
+```
+const { numAction } = mapActions(['numAction'])
+
+strMutation:strMutation.bind({ $store: store }),
+
+```
