@@ -88,3 +88,23 @@ const { numAction } = mapActions(['numAction'])
 strMutation:strMutation.bind({ $store: store }),
 
 ```
+
+flex 布局笔记
+
+• 开启 flex 布局使用display: flex属性。
+• flex 布局有主轴和交叉轴，分别使用justify-content和align-items控制对齐方式。
+ -  justify-content: flex-start|center|flex-end|space-between|space-evenly|space-around;
+ 对应轴上的对齐方式
+-align-items: stretch(拉伸)|flex-start(轴向开始)|center(轴向居中)|flex-end | baseline (文字基线)|align-content
+• 支持按行或列进行排列，使用flex-direction，另外也支持row-reverse和column-reverse反向排列。
+•  -flex-direction: column(行模式)| row（列模式）| *-reverse （对应模式的逆序）
+• 子元素可以通过flex简写形式，或者flex-grow，flex-shrink，flex-basis 来调整元素的空间占比和缩放。
+ -flex-basis 设置主轴方向为固定值
+ -flex-grow 这个属性是说 flex 容器在有剩余空间的时候，子元素占据剩余空间的占比。
+  -flex-shrink当它们的宽度超过 flex 容器之后，该如何进行收缩
+• 通过flex-wrap可以设置 flex 子元素折行显示。
+• 嵌套flex容器的缩放问题。
+作者：峰华
+链接：https://juejin.cn/post/6844904116141948936
+来源：稀土掘金
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
