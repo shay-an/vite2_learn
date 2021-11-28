@@ -1,31 +1,13 @@
+<script lang="ts" setup>
+import Login from './login/login.vue'
+function onSubmit() {
+    console.log('f-submit')
+}
+</script>
 <template>
-  <el-form ref="form"  label-width="120px">
-    <el-form-item label="名称">
-      <el-input v-model="name"></el-input>
-    </el-form-item>
-    <el-form-item label="年龄">
-      <el-input v-model="age"></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="onSubmit">Create</el-button>
-      <el-button>Cancel</el-button>
-    </el-form-item>
-  </el-form>
+<Login name="123" @submit="onSubmit" password="999"></Login>
 </template>
 
-<script lang="ts" setup>
-import { reactive, toRefs,ref } from 'vue'
+<style lang="less">
 
-function getForm () {
-    const form = reactive({
-        name:'',
-        age: 0,
-    })
-    return toRefs(form)
-}
-const { name, age } = getForm();
-const onSubmit = function() {
-    console.log('submit!',name.value,age.value)
-}
-
-</script>
+</style>
