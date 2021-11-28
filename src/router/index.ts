@@ -8,23 +8,27 @@ const Router = createRouter({
         {
             path: '/',
             name: 'realHome',
+            meta: { title: '首页' },
             component: Home
         },
         {
             path: '/flex',
             name: 'flex',
+            meta: { title: 'flex' },
             component: flex,
             props: true
         },
         {
             path: '/:msg',
             name: 'home',
+            meta: { title: '首页(props测试)' },
             component: Home,
             props: true
         },
         {
             path: '/404',
             name: 'PageNotExist',
+            meta: { title: '404' },
             component: () => import('../views/404.vue'),
         },
         {

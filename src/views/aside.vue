@@ -14,11 +14,11 @@
         <span>vue3</span>
       </template>
       <el-menu-item-group title="vue3 学习">
-        <el-menu-item index="1-1">
-          <router-link class="link" to="/">主页</router-link>
+        <el-menu-item @click="router.push({path:'/'})" index="1-1">
+          主页
         </el-menu-item>
-        <el-menu-item index="1-2">
-          <router-link class="link" to="/43434/3434">404</router-link>
+        <el-menu-item @click="router.push({ path:'/43434/3434' })" index="1-2">
+          404
         </el-menu-item>
       </el-menu-item-group>
     </el-sub-menu>
@@ -28,8 +28,8 @@
         <span>布局</span>
       </template>
       <el-menu-item-group title="布局学习">
-        <el-menu-item index="2-1">
-          <router-link to="/flex">flex</router-link>
+        <el-menu-item @click="router.push({ path:'/flex' })" index="2-1">
+          flex
         </el-menu-item>
       </el-menu-item-group>
     </el-sub-menu>
@@ -46,6 +46,7 @@ import {
   Menu as IconMenu,
   Setting,
 } from '@element-plus/icons'
+import { useRoute,useRouter } from 'vue-router'
 
 export default defineComponent({
   components: {
@@ -55,6 +56,9 @@ export default defineComponent({
     IconMenu,
   },
   setup() {
+    const route = useRoute()
+    const router = useRouter()
+
     const handleOpen = (key:any, keyPath:any) => {
       console.log(key, keyPath)
     }
@@ -64,7 +68,7 @@ export default defineComponent({
     return {
       handleOpen,
       handleClose,
-
+      router
     }
   },
 })
