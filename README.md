@@ -89,8 +89,8 @@ strMutation:strMutation.bind({ $store: store }),
 
 ```
 
-flex 布局笔记
-
+##### flex 布局笔记
+```
 • 开启 flex 布局使用display: flex属性。
 • flex 布局有主轴和交叉轴，分别使用justify-content和align-items控制对齐方式。
  -  justify-content: flex-start|center|flex-end|space-between|space-evenly|space-around;
@@ -108,3 +108,21 @@ flex 布局笔记
 链接：https://juejin.cn/post/6844904116141948936
 来源：稀土掘金
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+```
+##### 面包屑功能
+```
+function getBreadList() {
+  let list:RouteLocationMatched[] = reactive([])
+  const route = useRoute()
+  watch(route,()=>{
+    let matched = route.matched;
+    //如果不是首页
+    if (matched.length && !isHome(matched[0])) {
+      matched = ([{ path: "/", meta: { title: "首页" } }] as unknown as RouteLocationMatched[]).concat(matched);
+    }
+    list.length = 0;
+    matched.forEach(item=>list.push(item))
+  },{immediate:true})
+  return list
+}
+```
