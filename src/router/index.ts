@@ -1,6 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../components/home/index.vue'
-import flex from '../components/flex/index.vue'
 
 const Router = createRouter({
     history: createWebHashHistory(),
@@ -10,6 +9,12 @@ const Router = createRouter({
             name: 'realHome',
             meta: { title: '首页' },
             component: Home
+        },
+        {
+            path: '/login',
+            name: 'login',
+            meta: { title: '登录' },
+            component: () => import('../components/login-component/index.vue')
         },
         {
             path: '/flex',

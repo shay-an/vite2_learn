@@ -17,6 +17,9 @@
         <el-menu-item @click="router.push({path:'/'})" index="1-1">
           主页
         </el-menu-item>
+        <el-menu-item @click="router.push({ path:'/login' })" index="1-2">
+          登录
+        </el-menu-item>
         <el-menu-item @click="router.push({ path:'/43434/3434' })" index="1-2">
           404
         </el-menu-item>

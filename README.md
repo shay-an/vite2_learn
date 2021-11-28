@@ -1,4 +1,6 @@
 ## vue3 vite2 vue-router4 vuex4
+
+[TOC]
 > 初始化项目
 ```
 npm init vite
@@ -15,7 +17,7 @@ sfc 单文件组件
 - 开发依赖一定要放到 devDependencies
 - 404 匹配
 
-```
+```javascript
 {
     path: "/:catchAll(.*)", // 不识别的path自动匹配404
     redirect: '/404',
@@ -25,7 +27,7 @@ sfc 单文件组件
 > 
 > 更好的封装，把一套逻辑封装到一个函数内，利于程序解耦
 > 脚本标签上加上setup属性 标签内的脚本就可以使用
-```
+```javascript
 <script setup lang="ts">
 import { ref,onMounted,onBeforeUpdate,reactive,  onUnmounted, toRefs, watch, computed } from "vue";
 
@@ -78,11 +80,11 @@ const { x, y, cmp } = useMousePosition()
 </script>
 ```
 vuex 在 setup函数内使用 mapActions mapMutations 直接返回映射后的函数会报错，报错大概是在：
-```
+```javascript
 var dispatch = this.$store.dispatch;// this 是undefined
 ```
 解决办法：
-```
+```javascript
 const { numAction } = mapActions(['numAction'])
 
 strMutation:strMutation.bind({ $store: store }),
@@ -110,7 +112,7 @@ strMutation:strMutation.bind({ $store: store }),
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 ```
 ##### 面包屑功能
-```
+```javascript
 function getBreadList() {
   let list:RouteLocationMatched[] = reactive([])
   const route = useRoute()
@@ -125,4 +127,60 @@ function getBreadList() {
   },{immediate:true})
   return list
 }
+```
+
+##### 双向绑定
+
+```javascript
+//在 <script setup>内使用
+<template>
+  <el-form ref="form"  label-width="120px">
+    <el-form-item label="名称">
+      <el-input v-model="name"></el-input>
+    </el-form-item>
+    <el-form-item label="年龄">
+      <el-input v-model="age"></el-input>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="onSubmit">Create</el-button>
+      <el-button>Cancel</el-button>
+    </el-form-item>
+  </el-form>
+</template>
+
+<script lang="ts" setup>
+import { reactive, toRefs,ref } from 'vue'
+
+function getForm () {
+    const form = reactive({
+        name:'',
+        age: 0,
+    })
+    return toRefs(form)
+}
+const { name, age } = getForm();
+const onSubmit = function() {
+    console.log('submit!',name.value,age.value)
+}
+
+</script>
+```
+
+
+```javascript
+//在普通<script>内使用
+<template>
+  <el-input v-model="input" placeholder="Please input" />
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+export default defineComponent({
+  setup() {
+    return {
+      input: ref(''),// 对象需要toRefs转换
+    }
+  },
+})
+</script>
 ```
