@@ -3,7 +3,7 @@
     <el-aside>
       <Aside></Aside>
     </el-aside>
-    <el-main>
+    <el-main class="main">
       <el-header>
         <Header></Header>
       </el-header>
@@ -27,6 +27,9 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="less" scoped>
+.main {
+  overflow-y: scroll;
+  height: 100vh;
+}
 </style>
