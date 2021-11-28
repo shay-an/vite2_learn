@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import Home from '../views/home.vue'
-import flex from '../views/flex.vue'
+import Home from '../components/home/index.vue'
+import flex from '../components/flex/index.vue'
 
 const Router = createRouter({
     history: createWebHashHistory(),
@@ -15,8 +15,15 @@ const Router = createRouter({
             path: '/flex',
             name: 'flex',
             meta: { title: 'flex' },
-            component: flex,
-            props: true
+            component: () => import('../components/flex/index.vue'),
+            children: [
+                {
+                    path: '/flex/flex2',
+                    name: 'flex2',
+                    meta: { title: '色子布局' },
+                    component: () => import('../components/flex/flex2.vue'),
+                }
+            ]
         },
         {
             path: '/:msg',
@@ -29,7 +36,7 @@ const Router = createRouter({
             path: '/404',
             name: 'PageNotExist',
             meta: { title: '404' },
-            component: () => import('../views/404.vue'),
+            component: () => import('../components/404/index.vue'),
         },
         {
             path: "/:catchAll(.*)", // 不识别的path自动匹配404

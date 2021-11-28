@@ -4,7 +4,6 @@ import Layout from './views/layout.vue'
 </script>
 
 <template>
-  
   <layout></layout>
 </template>
 
