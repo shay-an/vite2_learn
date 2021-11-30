@@ -17,6 +17,12 @@ const Router = createRouter({
             component: () => import('../components/login-component/index.vue')
         },
         {
+            path: '/huolala',
+            name: 'huolala',
+            meta: { title: '货拉拉面试题' },
+            component: () => import('../components/huolala/index.vue')
+        },
+        {
             path: '/flex',
             name: 'flex',
             meta: { title: 'flex' },
@@ -27,7 +33,7 @@ const Router = createRouter({
                     name: 'flex2',
                     meta: { title: '色子布局' },
                     component: () => import('../components/flex/flex2.vue'),
-                }
+                },
             ]
         },
         {

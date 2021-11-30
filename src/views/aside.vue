@@ -34,6 +34,9 @@
         <el-menu-item @click="router.push({ path:'/flex' })" index="2-1">
           flex
         </el-menu-item>
+        <el-menu-item @click="router.push({ path:'/huolala' })" index="2-1">
+          货拉拉面试题
+        </el-menu-item>
       </el-menu-item-group>
     </el-sub-menu>
     

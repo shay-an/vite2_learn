@@ -165,8 +165,6 @@ const onSubmit = function() {
 
 </script>
 ```
-
-
 ```javascript
 //在普通<script>内使用
 <template>
@@ -183,4 +181,48 @@ export default defineComponent({
   },
 })
 </script>
+```
+
+##### div 绕鼠标旋转
+
+```html
+<-- 跟随鼠标移动 >
+<div class="postion" :style="{top:y+'px',left:x+'px'}"></div>
+```
+
+```javascript
+const update = (e:MouseEvent) => {
+    position.x = e.pageX -150
+    position.y = e.pageY -150
+}
+```
+```css
+.postion {
+  width: 100px;
+  height: 100px;
+  background-color: blue;
+  position: fixed;
+  /* 旋转动画 */
+  animation:turn 1s linear infinite;
+  /* 旋转偏移 */
+  transform-origin:150% 150%;
+}
+
+@keyframes turn{
+  0%{
+    transform:rotate(0deg);
+  }
+  25%{
+    transform:rotate(90deg);
+  }
+  50%{
+    transform:rotate(180deg);
+  }
+  75%{
+    transform:rotate(270deg);
+  }
+  100%{
+    transform:rotate(360deg);
+  }
+}
 ```
