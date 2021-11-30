@@ -226,3 +226,11 @@ const update = (e:MouseEvent) => {
   }
 }
 ```
+
+#### 伪类选择器
+##### nth-last-child last-child nth-child first-child
+li:nth-child(n) n = int / even odd
+如果最后一个/第一个不是li则不选择任何元素（助记：选中第一(n)个/最后一（n）个,前面的条件符合则选中，否则不选中）
+##### last-of-type nth-last-of-type first-of-type nth-of-type
+li:nth-of-type()n = int / even odd
+有li则选中最后一个/第一个（助记：选中第一(n)个/最后一（n）个并且符合前面条件的元素）
