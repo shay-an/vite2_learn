@@ -108,11 +108,9 @@ const { x, y } = useMousePosition();
     }
     25%{
         transform:rotate(90deg);
-        // transform-origin:50% 50%;
     }
     50%{
         transform:rotate(180deg);
-        // transform-origin:-50% -50%;
     }
     75%{
         transform:rotate(270deg);

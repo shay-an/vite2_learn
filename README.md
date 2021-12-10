@@ -313,3 +313,12 @@ mode: out-in in-out 先出后进  先进后出 为空时同时进行（transitio
   }
 }
 ```
+
+#### 递归组件
+本组件内引入本组件需要定义名称
+
+```typescript
+export default defineComponent({
+  name:'tree-item'
+})
+```

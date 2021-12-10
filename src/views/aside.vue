@@ -26,6 +26,9 @@
         <el-menu-item @click="router.push({ path:'/transition-group' })" index="1-4">
           transition-group
         </el-menu-item>
+        <el-menu-item @click="router.push({ path:'/tree-view' })" index="1-5">
+          tree-view
+        </el-menu-item>
       </el-menu-item-group>
     </el-sub-menu>
     <el-sub-menu index="2">
@@ -37,7 +40,7 @@
         <el-menu-item @click="router.push({ path:'/flex' })" index="2-1">
           flex
         </el-menu-item>
-        <el-menu-item @click="router.push({ path:'/huolala' })" index="2-1">
+        <el-menu-item @click="router.push({ path:'/huolala' })" index="2-2">
           货拉拉面试题
         </el-menu-item>
       </el-menu-item-group>

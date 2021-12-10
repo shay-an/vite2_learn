@@ -50,6 +50,12 @@ const Router = createRouter({
             component: import('../components/transition-group/index.vue')
         },
         {
+            path: '/tree-view',
+            name: 'tree-view',
+            meta: { title: 'tree-view' },
+            component: import('../components/tree-view/index.vue')
+        },
+        {
             path: '/404',
             name: 'PageNotExist',
             meta: { title: '404' },
