@@ -302,8 +302,10 @@ mode: out-in in-out 先出后进  先进后出 为空时同时进行（transitio
 }
 ```
 3. 借助伪类或伪元素区分浏览器
-4. @supports规则,<var>=<declaration> | <supports-condition>
+4. @supports规则
+
 ```css
+<var>=<declaration> | <supports-condition>
 @supports (animation: none) {
   .icon-loading {
     background: url(../../../assets/loading.png);
