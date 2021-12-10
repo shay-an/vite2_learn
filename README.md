@@ -287,3 +287,27 @@ name: 动态生成class前缀
 
 mode: out-in in-out 先出后进  先进后出 为空时同时进行（transition-group 无效）
 更多属性见官方文档： https://v3.cn.vuejs.org/api/built-in-components.html#transition
+
+#### 渐进增强技巧
+
+1. 对于高版本浏览器支持但是低版本浏览器不支持的属性，在不影响基本功能和版式的基础上可以放弃某些效果
+2. 利用属性值的语法差异实现兼容
+```css
+.icon-loading {
+  display: inline-block;
+  width: 30px;height: 30px;
+  background: url(../../../assets/loading.gif);
+  background: url(../../../assets/loading.png), linear-gradient(transparent,transparent);
+  animation: spin 1s linear infinite;
+}
+```
+3. 借助伪类或伪元素区分浏览器
+4. @supports规则,<var>=<declaration> | <supports-condition>
+```css
+@supports (animation: none) {
+  .icon-loading {
+    background: url(../../../assets/loading.png);
+    animation: spin 1s linear infinite;
+  }
+}
+```
