@@ -234,3 +234,56 @@ li:nth-child(n) n = int / even odd
 ##### last-of-type nth-last-of-type first-of-type nth-of-type
 li:nth-of-type()n = int / even odd
 有li则选中最后一个/第一个（助记：选中第一(n)个/最后一（n）个并且符合前面条件的元素）
+
+#### vue3 组合式API
+##### setup
+可以在选项API中声明setup函数，也可以在script标签上添加setup属性，脚本内所处的就是setup环境，这里所处的生命周期相当于vue2的created,这里没有this，建议要符合函数式编程思想来编写逻辑，一切都是函数，每组逻辑的状态都是在函数内进行维护
+
+
+##### 响应式数据
+
+> ref reactive toRefs
+
+ref 是对单值进行响应化操作，通过xxx.value的方式对值进行取值赋值的操作，使其拥有响应式能力
+
+reactive 是对对象类型的数据进行响应化的操作，包括一般对象及数组进行包装，但是不能对其进行解构操作，这将失去响应式，此时可以对其进行toRefs操作，使其浅层属性进行ref包装，在解构时不会丢失响应式能力，在混合多个对象时也应该使用该方式。
+
+#### 过渡 & 动画
+##### class 
+
+1. v-enter-from：定义进入过渡的开始状态。在元素被插入之前生效，在元素被插入之后的下一帧移除。
+
+1. v-enter-active：定义进入过渡生效时的状态。在整个进入过渡的阶段中应用，在元素被插入之前生效，在过渡/动画完成之后移除。这个类可以被用来定义进入过渡的过程时间，延迟和曲线函数。
+
+1. v-enter-to：定义进入过渡的结束状态。在元素被插入之后下一帧生效 (与此同时 v-enter-from 被移除)，在过渡/动画完成之后移除。
+
+1. v-leave-from：定义离开过渡的开始状态。在离开过渡被触发时立刻生效，下一帧被移除。
+
+1. v-leave-active：定义离开过渡生效时的状态。在整个离开过渡的阶段中应用，在离开过渡被触发时立刻生效，在过渡/动画完成之后移除。这个类可以被用来定义离开过渡的过程时间，延迟和曲线函数。
+
+1. v-leave-to：离开过渡的结束状态。在离开过渡被触发之后下一帧生效 (与此同时 v-leave-from 被移除)，在过渡/动画完成之后移除。
+
+##### 普通过渡
+
+```html
+<transition name="component-fade" mode="out-in">
+  <component :is="allComponent[curComponent]"></component>
+</transition>
+```
+
+##### 列表过渡
+
+```html
+<transition-group name="list" tag="p">
+  <span v-for="item in items" :key="item" class="list-item">
+    {{ item }}
+  </span>
+</transition-group>
+```
+
+##### 常用属性理解
+
+name: 动态生成class前缀
+
+mode: out-in in-out 先出后进  先进后出 为空时同时进行（transition-group 无效）
+更多属性见官方文档： https://v3.cn.vuejs.org/api/built-in-components.html#transition

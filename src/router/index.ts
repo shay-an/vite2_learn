@@ -44,6 +44,12 @@ const Router = createRouter({
             props: true
         },
         {
+            path: '/transition-group',
+            name: 'transition-group',
+            meta: { title: '首页(props测试)' },
+            component: import('../components/transition-group/index.vue')
+        },
+        {
             path: '/404',
             name: 'PageNotExist',
             meta: { title: '404' },

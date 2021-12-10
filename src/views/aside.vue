@@ -20,8 +20,11 @@
         <el-menu-item @click="router.push({ path:'/login' })" index="1-2">
           登录
         </el-menu-item>
-        <el-menu-item @click="router.push({ path:'/43434/3434' })" index="1-2">
+        <el-menu-item @click="router.push({ path:'/43434/3434' })" index="1-3">
           404
+        </el-menu-item>
+        <el-menu-item @click="router.push({ path:'/transition-group' })" index="1-4">
+          transition-group
         </el-menu-item>
       </el-menu-item-group>
     </el-sub-menu>
