@@ -37,6 +37,12 @@ const Router = createRouter({
             ]
         },
         {
+            path: '/cnode',
+            name: 'cnodeJs',
+            meta: { title: 'cnode' },
+            component: () => import('../components/cnode/index.vue'),
+        },
+        {
             path: '/:msg',
             name: 'home',
             meta: { title: '首页(props测试)' },
@@ -67,6 +73,4 @@ const Router = createRouter({
         },
     ]
 })
-console.log(Router)
-
 export default Router

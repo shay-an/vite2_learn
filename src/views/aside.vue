@@ -45,6 +45,17 @@
         </el-menu-item>
       </el-menu-item-group>
     </el-sub-menu>
+    <el-sub-menu index="3">
+      <template #title>
+        <el-icon><location /></el-icon>
+        <span>cNode</span>
+      </template>
+      <el-menu-item-group title="cNode社区">
+        <el-menu-item @click="router.push({ path:'/cnode' })" index="3-1">
+          cNode
+        </el-menu-item>
+      </el-menu-item-group>
+    </el-sub-menu>
     
   </el-menu>
     
