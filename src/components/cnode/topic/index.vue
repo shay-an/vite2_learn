@@ -62,6 +62,7 @@ getData()
 }
 
 .replies-item {
+    background-color: rgb(239, 239, 239);
     border-bottom: 1px solid #ccc;
     padding: 20px 10px;
 }
@@ -72,9 +73,15 @@ getData()
 
 .nickname {
     line-height: 30px;
+    margin-left: 10px;
+    color: rgb(60, 60, 60);
 }
 
 .content {
     padding: 10px;
+    background: rgb(255, 221, 221);
+    border-radius: 4px;
 }
+
+
 </style>
