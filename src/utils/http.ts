@@ -36,6 +36,16 @@ interface topicsGet {
     mdrender?: boolean
 }
 
+export interface replie {
+    id: string;
+    author: {
+        loginname: string,
+        avatar_url: string
+    },
+    content: string,
+    create_at: string,
+}
+
 export interface topicsRess {
     id: string,
     author_id: string,
@@ -48,6 +58,7 @@ export interface topicsRess {
     reply_count: number,
     visit_count: number,
     create_at: string,
+    replies?: replie[],
     author: {
         loginname: string,
         avatar_url: string
@@ -56,6 +67,10 @@ export interface topicsRess {
 
 interface topicResData extends requestBase {
     data: topicsRess[]
+}
+
+interface topicInfoResData extends requestBase {
+    data: topicsRess
 }
 
 const http = axios.create({
@@ -68,7 +83,7 @@ export const topics = function (data: topicsGet = {}): Promise<axiosBase<topicRe
     })
 }
 
-export const topicsInfo = function (id: string) {
+export const topicsInfo = function (id: string): Promise<axiosBase<topicInfoResData>> {
     return http.get('/topic/' + id)
 }
 

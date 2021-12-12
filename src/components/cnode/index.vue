@@ -1,39 +1,46 @@
 <template>
-<div class="list" v-infinite-scroll="load">
-  <el-card 
-  class="item"
-  v-for="(item) in list"
-  :key="item.id"
-  :span="8"
-  :body-style="{ padding: '0px' }"
-  >
-    <img
-      :src="item.author.avatar_url || defaultImgUrl"
-      class="image"
-    />
-    <div style="padding: 14px">
-      <span style="font-size:14px">{{ item.title }}</span>
-      <div class="bottom">
-        <time class="time">{{ item.create_at }}</time>
-        <div class="button" v-if="item.good">推荐</div>
-        <div class="button" v-if="item.top">置顶</div>
-        <div class="tab">{{ getType(item.tab) }}</div>
+  <transition-group name="list" tag="div" class="list" v-infinite-scroll="load">
+    <el-card 
+    class="item"
+    v-for="(item) in list"
+    :key="item.id"
+    :span="8"
+    @click="router.push({
+      name:'cnode-topic',
+      params:{
+        id:item.id
+      }
+    })"
+    >
+      <img
+        :src="item.author.avatar_url || defaultImgUrl"
+        class="image"
+      />
+      <div style="padding: 14px">
+        <span style="font-size:14px">{{ item.title }}</span>
+        <div class="bottom">
+          <time class="time">{{ item.create_at }}</time>
+          <div class="button" v-if="item.good">推荐</div>
+          <div class="button" v-if="item.top">置顶</div>
+          <div class="tab">{{ getType(item.tab) }}</div>
+        </div>
       </div>
-    </div>
-    <div class="info" style="padding: 14px">
-      <span>已回复：{{ item.reply_count }}</span>
-      <span>已阅：{{ item.visit_count }}</span>
-    </div>
-  </el-card>
-  </div>
- 
+      <div class="info" style="padding: 14px">
+        <span>已回复：{{ item.reply_count }}</span>
+        <span>已阅：{{ item.visit_count }}</span>
+      </div>
+    </el-card>
+  </transition-group>
 </template>
 
 <script lang="ts" setup>
-import { ImageEmits } from 'element-plus'
-import { defineComponent, ref, reactive } from 'vue'
+import { ref, reactive } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { topics, topicsRess } from '../../utils/http'
 const currentDate = ref(new Date())
+
+const router = useRouter()
+const route = useRoute()
 
 // const tabMap = {
 //   ask:'问答',
@@ -90,6 +97,14 @@ getData()
   width: 200px;
   margin: 10px;
   position: relative;
+  .el-card__body {
+    height: 100%;
+    padding: 4px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 }
 .time {
   font-size: 13px;
@@ -122,18 +137,22 @@ getData()
   padding: 10px;
 }
 
-// .info {
-//   position: absolute;
-//   width: 100%;
-//   left: 0;
-//   bottom: 0;
-//   color: rgb(47, 47, 47);
-//   background: #ccc;
-//   padding: 10px;
-// }
+.info {
+  color: #2e8d6f;
+}
 
 .image {
   width: 100%;
   display: block;
+}
+
+.list-enter-active,
+.list-leave-active {
+  transition: all 1s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
 }
 </style>

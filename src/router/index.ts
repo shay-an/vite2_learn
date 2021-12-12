@@ -43,6 +43,12 @@ const Router = createRouter({
             component: () => import('../components/cnode/index.vue'),
         },
         {
+            path: '/cnode-topic/:id',
+            name: 'cnode-topic',
+            meta: { title: 'cnode-详情页' },
+            component: () => import('../components/cnode/topic/index.vue'),
+        },
+        {
             path: '/:msg',
             name: 'home',
             meta: { title: '首页(props测试)' },
