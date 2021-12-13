@@ -17,8 +17,8 @@
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { ElMessage } from 'element-plus'
-import { topicsRess, topicsInfo, accesstoken } from '../../../utils/http'
+
+import { topicsRess, topicsInfo } from '../../../utils/http'
 type topics = Partial<topicsRess>
 const topic = reactive<topics>({})
 
