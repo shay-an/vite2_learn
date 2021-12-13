@@ -1,60 +1,96 @@
 <template>
-  <transition-group name="list" tag="div" class="list" v-infinite-scroll="load">
-    <el-card 
-    class="item"
-    v-for="(item) in list"
-    :key="item.id"
-    :span="8"
-    @click="router.push({
-      name:'cnode-topic',
-      params:{
-        id:item.id
-      }
-    })"
-    >
-      <img
-        :src="item.author.avatar_url || defaultImgUrl"
-        class="image"
-      />
-      <div style="padding: 14px">
-        <span style="font-size:14px">{{ item.title }}</span>
-        <div class="bottom">
-          <time class="time">{{ item.create_at }}</time>
-          <div class="button" v-if="item.good">推荐</div>
-          <div class="button" v-if="item.top">置顶</div>
-          <div class="tab">{{ getType(item.tab) }}</div>
+  <div class="cnode-content">
+    <ul class="tabs">
+      <li 
+      v-for="item in tabsData" :key="item.name"
+      :class="{ active: item.isActive }"
+      @click="router.push({
+        name:'cnodeJs',
+        params:{
+          tabsName:item.key
+        }
+      })"
+      >{{ item.name }}</li>
+    </ul>
+    <transition-group name="list" tag="div" class="list" v-infinite-scroll="load">
+      <el-card 
+      class="item"
+      v-for="(item) in list"
+      :key="item.id"
+      :span="8"
+      @click="router.push({
+        name:'cnode-topic',
+        params:{
+          id:item.id
+        }
+      })"
+      >
+        <img
+          :src="item.author.avatar_url || defaultImgUrl"
+          class="image"
+        />
+        <div style="padding: 14px">
+          <span style="font-size:14px">{{ item.title }}</span>
+          <div class="bottom">
+            <time class="time">{{ item.create_at }}</time>
+            <div class="button" v-if="item.good">推荐</div>
+            <div class="button" v-if="item.top">置顶</div>
+            <div class="tab">{{ getType(item.tab) }}</div>
+          </div>
         </div>
-      </div>
-      <div class="info" style="padding: 14px">
-        <span>已回复：{{ item.reply_count }}</span>
-        <span>已阅：{{ item.visit_count }}</span>
-      </div>
-    </el-card>
-  </transition-group>
+        <div class="info" style="padding: 14px">
+          <span>已回复：{{ item.reply_count }}</span>
+          <span>已阅：{{ item.visit_count }}</span>
+        </div>
+      </el-card>
+    </transition-group>
+  </div>
+  
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive } from 'vue'
+import {  reactive, watch, toRefs, defineProps } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { topics, topicsRess } from '../../utils/http'
-const currentDate = ref(new Date())
 
 const router = useRouter()
 const route = useRoute()
 
-// const tabMap = {
-//   ask:'问答',
-//   share:'分享',
-//   job:'招聘',
-//   good:'推荐'
-// }
+// 使用路由传入props 需要在这定义props
+const props = defineProps({
+  tabsName:{
+    type: String,
+    required: true
+  }
+})
+// 解构需要转ref
+const { tabsName } = toRefs(props)
 
 enum tabMap {
   ask='问答',
   share='分享',
   job='招聘',
-  good='推荐'
+  good='推荐',
+  dev = '客户端测试'
 }
+
+enum tabs {
+  ask = 'ask',
+  share = 'share',
+  job = 'job',
+  good = 'good',
+  dev = 'dev',
+  all = 'all'
+}
+
+const tabsData = reactive([
+  {key:tabs.all,name:'全部',isActive:true,params:null},
+  {key:tabs.good,name:'精华',isActive:false,params:tabs.good},
+  {key:tabs.share,name:'分享',isActive:false,params:tabs.share},
+  {key:tabs.ask,name:'问答',isActive:false,params:tabs.ask},
+  {key:tabs.job,name:'招聘',isActive:false,params:tabs.job},
+  {key:tabs.dev,name:'客户端测试',isActive:false,params:tabs.dev},
+])
 
 function getType(type:string) {
   switch (type) {
@@ -64,17 +100,47 @@ function getType(type:string) {
       return tabMap.share;
     case 'job':
       return tabMap.job;
+    case 'dev':
+      return tabMap.dev;
   }
 }
 
 const list = reactive<topicsRess[]>([])
 const defaultImgUrl = 'https://avatars.githubusercontent.com/u/92838042?v=4&s=120'
-const pages = {
-  page:0
+const pages = reactive({
+  page:0,
+  tab:null
+})
+const { page, tab } = toRefs(pages)
+watch(page,()=>{
+  getData()
+})
+// 需要watch这个props
+watch(tabsName,()=>{
+  console.log(tabsName.value)
+  list.length = 0;
+  getPage(tabsName.value)
+})
+
+const getPage = (tab:any)=> {
+  let myTab = null;
+  if (tab !== tabs.all) myTab = tab;
+  (pages.tab as any) = myTab;
+  if (tab === tabs.all) {
+    tabsData[0].isActive = true;
+  }
+  for (let item of tabsData) {
+    if (item.key === tab) {
+      item.isActive = true;
+    } else {
+      item.isActive = false;
+    }
+  }
+  pages.tab = tab
+  getData()
 }
 const load = () => {
   pages.page ++;
-  getData()
 }
 
 async function getData(){
@@ -82,16 +148,43 @@ async function getData(){
   list.push(...res.data.data)
 }
 
-getData()
+// getData()
+getPage(tabsName.value)
 
 </script>
 
 <style lang="less">
+.cnode-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .tabs {
+    height: 30px;
+    display: flex;
+    padding: 20px 0;;
+  }
+
+  li {
+    margin: 0 20px;
+    font-size: 14px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  li.active {
+    background: #2e8d6f;
+    color: #fff
+  }
+}
 .list {
-  height: 700px;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
   overflow: auto;
   display: flex;
   flex-wrap: wrap;
+  flex: auto;
 }
 .item {
   width: 200px;

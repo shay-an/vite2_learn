@@ -37,10 +37,11 @@ const Router = createRouter({
             ]
         },
         {
-            path: '/cnode',
+            path: '/cnode/:tabsName',
             name: 'cnodeJs',
             meta: { title: 'cnode' },
             component: () => import('../components/cnode/index.vue'),
+            props: true
         },
         {
             path: '/cnode-topic/:id',

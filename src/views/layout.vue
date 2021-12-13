@@ -7,10 +7,9 @@
       <el-header>
         <Header></Header>
       </el-header>
-      <el-main>
+      <el-main class="main-content">
         <router-view></router-view>
       </el-main>
-      <el-footer></el-footer>
     </el-main>
   </el-container>
 </template>
@@ -31,5 +30,10 @@ export default defineComponent({
 .main {
   overflow-y: scroll;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.main-content {
+  flex: auto;
 }
 </style>

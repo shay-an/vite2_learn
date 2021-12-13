@@ -31,7 +31,7 @@ interface upsRes extends requestBase {
 
 interface topicsGet {
     page?: number
-    tab?: 'ask' | 'share' | 'job' | 'good'
+    tab?: 'ask' | 'share' | 'job' | 'good' | 'dev' | null
     limit?: number
     mdrender?: boolean
 }

@@ -322,3 +322,96 @@ export default defineComponent({
   name:'tree-item'
 })
 ```
+
+#### 路由传入props
+
+```javascript
+// 使用路由传入props 需要在这定义props
+const props = defineProps({
+  tabsName:{
+    type: String,
+    required: true
+  }
+})
+// 解构需要转ref
+const { tabsName } = toRefs(props)
+
+// 需要watch这个props
+watch(tabsName,()=>{
+  console.log(tabsName.value)
+  list.length = 0;
+  getPage(tabsName.value)
+})
+```
+#### 获取路由
+```javascript
+import { useRouter, useRoute } from 'vue-router'
+
+const router = useRouter()
+const route = useRoute()
+router.push({
+  name:'cnode-topic',
+  params:{
+    id:item.id
+  }
+})
+
+console.log(route.meta);
+```
+
+#### flex 一侧固定尺寸一侧自适应
+
+```vue
+
+<template>
+  <div class="app">
+    <div class="box" >
+      <div class="box1"
+           :style="{height : isTrue ? '200px':'auto'}"
+           @click="clickButton"
+      >
+        box1
+      </div>
+      <div class="box2">box2</div>
+    </div>
+  </div>
+</template>
+<script>
+export default {
+  name: 'app',
+  data(){
+      return {
+          isTrue:true
+      }
+  },
+  methods:{
+    clickButton(){
+        this.isTrue = ! this.isTrue
+    }
+  }
+}
+</script>
+ 
+<style lang="less" scoped>
+  .box{
+    display: flex;
+    width: 100%;
+    /*height: 100%;*/
+    height: 100vh;
+    flex-direction: column;
+    background-color: yellow;
+    .box1{
+      width: 100%;
+      background-color:deeppink;
+    }
+    .box2{
+      width: 100%;
+      flex: auto;
+      background-color: green;
+    }
+  }
+</style>
+```
+1. 父盒子(box)要设置 display: flex;  flex-direction: column;前两个固定的 height: 100vh;高度必须设置
+2. 子盒子1(box1)高度必须是根据条件判断必须包括一个定高，一个auto
+3. 子盒子2(box2)必须设置flex为auto
