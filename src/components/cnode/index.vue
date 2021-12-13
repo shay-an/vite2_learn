@@ -2,7 +2,7 @@
   <el-button type="primary" class="login" v-if="loginToken.length !== 36" @click="loginShow = true"
       >登录</el-button>
   <el-dialog v-model="loginShow" title="accesstoken">
-    <el-form ref="form" :rules="accesstokenRules" :model="accesstokenForm" label-width="120px">
+    <el-form ref="accesstokenFormRef" :rules="accesstokenRules" :model="accesstokenForm" label-width="120px">
       <el-form-item  prop="token" label="accesstoken">
         <el-input v-model="accesstokenForm.token"></el-input>
       </el-form-item>
@@ -72,12 +72,13 @@ const store = useStore();
 const { accesstoken:loginToken } = toRefs(store.state.cNode)
 const { changeToken } = mapMutations('cNode',['changeToken']);
 const tokenSave = changeToken.bind({ $store: store });
-
+const accesstokenFormRef = ref(null)
 //58c61ed8-ea03-4eb4-a8a8-6ee919f764b3
 const loginShow = ref(false)
 
 const accesstokenSubmit = async ()=> {
   try {
+    await (accesstokenFormRef.value as any).validate()
     let data = await accesstoken(accesstokenForm.token);
     if (data.data.success) {
       ElMessage.success('登录成功')

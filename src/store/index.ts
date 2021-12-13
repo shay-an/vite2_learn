@@ -1,7 +1,8 @@
-import { createStore,Commit,MutationPayload,Store } from 'vuex'
+import { createStore, Commit, MutationPayload, Store } from 'vuex'
 
 
 interface homeStore {
+    cNode: cNode;
     num: number,
     str: string,
     arr: number[],
@@ -9,7 +10,7 @@ interface homeStore {
         name: string,
         age: number
     }
-    
+
 }
 const storeHome = {
     state: {
@@ -22,30 +23,30 @@ const storeHome = {
         }
     },
     getters: {
-        getNum(state:homeStore) {
+        getNum(state: homeStore) {
             return state.num + 2;
         },
-        getObj(state:homeStore) {
+        getObj(state: homeStore) {
 
             return state.obj;
         }
     },
     mutations: {
-        numMutation(state:homeStore, data: number) {
+        numMutation(state: homeStore, data: number) {
             state.num = data;
         },
-        strMutation(state:homeStore, data:string) {
+        strMutation(state: homeStore, data: string) {
             state.str = data;
         },
-        arrMutation(state:homeStore, data:number[]) {
+        arrMutation(state: homeStore, data: number[]) {
             state.arr = data;
         },
-        objMutation(state:homeStore, data:{name:string,age:number}) {
+        objMutation(state: homeStore, data: { name: string, age: number }) {
             state.obj = data;
         },
     },
     actions: {
-        numAction({ commit }:{commit:Commit}, args:number) {
+        numAction({ commit }: { commit: Commit }, args: number) {
             commit('numMutation', args)
             console.log("numAction")
         }
@@ -55,30 +56,30 @@ const storeHome = {
 }
 
 interface cNode {
-    accesstoken:string
+    accesstoken: string
 }
 
-const cNodePlugin = (store:Store<homeStore>) => {
+const cNodePlugin = (store: Store<homeStore>) => {
     // 当 store 初始化后调用
-    store.subscribe((mutation:MutationPayload, state) => {
+    store.subscribe((mutation: MutationPayload, state) => {
         if (mutation.type === 'cNode/changeToken') {
-            localStorage.setItem('cnode_token',mutation.payload)
+            localStorage.setItem('cnode_token', mutation.payload)
         }
     })
 }
 
 const storeCNode = {
     state: {
-        accesstoken: '',
+        accesstoken: localStorage.getItem('cnode_token') || '',
     },
     mutations: {
-        changeToken(state:cNode, data: string) {
+        changeToken(state: cNode, data: string) {
             state.accesstoken = data;
         },
     }
 }
 export default createStore({
-    plugins:[cNodePlugin],
+    plugins: [cNodePlugin],
     modules: {
         home: {
             namespaced: true,
