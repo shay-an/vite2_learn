@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref,onMounted,onBeforeUpdate,reactive,toRef,  onUnmounted, toRefs, watch, computed } from "vue";
 import { Search, Edit, Check, Message, Star, Delete } from '@element-plus/icons'
-import {  useStore, mapMutations,mapActions } from 'vuex'
+import {  useStore, mapMutations,mapActions,mapGetters } from 'vuex'
 let props = defineProps<{ msg: string }>();
 console.log(props);
 
@@ -18,23 +18,25 @@ function useMousePosition () {
 
   const store = useStore()
 
-  const { str, arr, obj } = toRefs(store.state)
-  const num = toRef(store.state, 'num');
+  const { str, arr, obj } = toRefs(store.state.home)
+  const num = toRef(store.state.home, 'num');
 
-  const { getNum, getObj } = toRefs(store.getters)
+  const { getNum, getObj } = mapGetters('home',['getNum','getObj'])
+  // const { getNum, getObj } = toRefs(store.getters.home)
+  console.log(getNum, getObj )
 
   const { 
     numMutation,
     strMutation,
     objMutation
-    } = mapMutations([
+    } = mapMutations('home',[
     'numMutation',
     'strMutation',
     'arrMutation',
     'objMutation'
     ])
 
-    const { numAction } = mapActions(['numAction'])
+  const { numAction } = mapActions('home',['numAction'])
 
   const update = (e:MouseEvent) => {
     position.x = e.pageX
@@ -66,9 +68,10 @@ function useMousePosition () {
     num,
     arr,
     obj,
-    getNum,
-    getObj,
+    getNum:getNum.bind({ $store: store }),
+    getObj:getObj.bind({ $store: store }),
     strMutation:strMutation.bind({ $store: store }),
+    objMutation:objMutation.bind({ $store: store }),
     numAction:numAction.bind({ $store: store }),
     cmp,
     ...toRefs(position)
@@ -86,6 +89,7 @@ getNum,
 getObj,
 strMutation,
 numAction,
+objMutation,
 } = useMousePosition()
 
 </script>
@@ -154,12 +158,15 @@ numAction,
   <br />
   <span
     >state.getters.getNum:
-    <h4>{{ getNum }}</h4></span
+    <h4>{{ getNum() }}</h4></span
   >
   <br />
+  <el-button @click="objMutation({
+    name:'李四',age:99
+  })">objClick</el-button>
   <span
     >state.getters.getObj:
-    <h4>{{ getObj }}</h4></span
+    <h4>{{ getObj() }}</h4></span
   >
   <br />
 </template>

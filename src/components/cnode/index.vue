@@ -1,4 +1,16 @@
 <template>
+  <el-button type="primary" class="login" v-if="loginToken.length !== 36" @click="loginShow = true"
+      >登录</el-button>
+  <el-dialog v-model="loginShow" title="accesstoken">
+    <el-form ref="form" :rules="accesstokenRules" :model="accesstokenForm" label-width="120px">
+      <el-form-item  prop="token" label="accesstoken">
+        <el-input v-model="accesstokenForm.token"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="accesstokenSubmit">登录</el-button>
+      </el-form-item>
+    </el-form>
+  </el-dialog>
   <div class="cnode-content">
     <ul class="tabs">
       <li 
@@ -49,12 +61,55 @@
 </template>
 
 <script lang="ts" setup>
-import {  reactive, watch, toRefs, defineProps } from 'vue'
+import { ref, reactive, watch, toRefs, defineProps } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { topics, topicsRess } from '../../utils/http'
+import { topics, topicsRess, accesstoken } from '../../utils/http'
+import { useStore,mapMutations } from 'vuex'
+import { ElMessage } from 'element-plus'
+const router = useRouter();
+const route = useRoute();
+const store = useStore();
+const { accesstoken:loginToken } = toRefs(store.state.cNode)
+const { changeToken } = mapMutations('cNode',['changeToken']);
+const tokenSave = changeToken.bind({ $store: store });
 
-const router = useRouter()
-const route = useRoute()
+//58c61ed8-ea03-4eb4-a8a8-6ee919f764b3
+const loginShow = ref(false)
+
+const accesstokenSubmit = async ()=> {
+  try {
+    let data = await accesstoken(accesstokenForm.token);
+    if (data.data.success) {
+      ElMessage.success('登录成功')
+      tokenSave(accesstokenForm.token)
+      loginShow.value = false;
+    } else {
+      ElMessage.success('登录失败')
+    }
+  } catch (e) {
+    ElMessage.success('登录失败')
+  }
+}
+
+const accesstokenForm = reactive({
+  token: ''
+})
+
+const accesstokenRules = { // 定义表单验证规则，普通对象即可
+    token: [
+        {
+        required: true,
+        message: '请输入accesstoken',
+        trigger: 'blur',
+        },
+        {
+        min: 36,
+        max: 36,
+        message: 'token有效长度36位',
+        trigger: 'blur',
+        },
+    ]
+}
 
 // 使用路由传入props 需要在这定义props
 const props = defineProps({
@@ -117,7 +172,6 @@ watch(page,()=>{
 })
 // 需要watch这个props
 watch(tabsName,()=>{
-  console.log(tabsName.value)
   list.length = 0;
   getPage(tabsName.value)
 })
@@ -137,6 +191,7 @@ const getPage = (tab:any)=> {
     }
   }
   pages.tab = tab
+  pages.page = 0
   getData()
 }
 const load = () => {
@@ -148,7 +203,6 @@ async function getData(){
   list.push(...res.data.data)
 }
 
-// getData()
 getPage(tabsName.value)
 
 </script>
@@ -247,5 +301,10 @@ getPage(tabsName.value)
 .list-leave-to {
   opacity: 0;
   transform: translateY(30px);
+}
+
+.login {
+  position: absolute;
+  right: 0;
 }
 </style>

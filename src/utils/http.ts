@@ -83,6 +83,13 @@ export const topics = function (data: topicsGet = {}): Promise<axiosBase<topicRe
     })
 }
 
+
+export const accesstoken = function (token:string): Promise<axiosBase<requestBase>> {
+    return http.post('/accesstoken',  {
+        accesstoken: token
+    })
+}
+
 export const topicsInfo = function (id: string): Promise<axiosBase<topicInfoResData>> {
     return http.get('/topic/' + id)
 }

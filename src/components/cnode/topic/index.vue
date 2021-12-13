@@ -1,4 +1,5 @@
 <template>
+ 
   <el-card class="box-card">
     <template #header>
       <div class="card-header">
@@ -16,19 +17,19 @@
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { topicsRess, topicsInfo } from '../../../utils/http'
+import { ElMessage } from 'element-plus'
+import { topicsRess, topicsInfo, accesstoken } from '../../../utils/http'
 type topics = Partial<topicsRess>
 const topic = reactive<topics>({})
 
 const router = useRouter()
 const route = useRoute()
-console.log(route.params.id)
 
 async function getData() {
     let res = await topicsInfo(route.params.id as string)
     Object.assign(topic,res.data.data)
-    console.log(topic)
 }
+
 getData()
 </script>
 <style lang="less">
@@ -48,8 +49,9 @@ getData()
 
 .box-card {
     width: 100%;
+    height: 100%;
     box-sizing: border-box;
-
+    overflow-y: scroll;
     img {
         max-width: 100%;
     }
