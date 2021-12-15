@@ -32,6 +32,8 @@ function useMousePosition () {
     return toRefs(position)
 }
 const { x, y } = useMousePosition();
+
+
 </script>
 
 <template>

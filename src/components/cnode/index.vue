@@ -193,7 +193,6 @@ const getPage = (tab:any)=> {
   }
   pages.tab = tab
   pages.page = 0
-  getData()
 }
 const load = () => {
   pages.page ++;
