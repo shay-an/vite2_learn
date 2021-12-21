@@ -23,6 +23,12 @@ const Router = createRouter({
             component: () => import('../components/huolala/index.vue')
         },
         {
+            path: '/ref',
+            name: 'ref',
+            meta: { title: 'ref' },
+            component: () => import('../components/ref/index.vue')
+        },
+        {
             path: '/flex',
             name: 'flex',
             meta: { title: 'flex' },
@@ -35,6 +41,13 @@ const Router = createRouter({
                     component: () => import('../components/flex/flex2.vue'),
                 },
             ]
+        },
+        {
+            path: '/swiper/first',
+            name: 'swiper',
+            meta: { title: 'swiper' },
+            component: () => import('../components/swiper/index.vue'),
+            props: true
         },
         {
             path: '/cnode/:tabsName',

@@ -415,3 +415,51 @@ export default {
 1. 父盒子(box)要设置 display: flex;  flex-direction: column;前两个固定的 height: 100vh;高度必须设置
 2. 子盒子1(box1)高度必须是根据条件判断必须包括一个定高，一个auto
 3. 子盒子2(box2)必须设置flex为auto
+
+#### Swiper 轮播图
+
+组件：swiper，swiper-slide
+
+swiper 是轮播容器
+swiper-slide 是轮播的每一个页面
+
+导入：
+```javascript
+// Import Swiper Vue.js components
+import { Swiper, SwiperSlide } from 'swiper/vue';
+
+// Import Swiper styles
+import 'swiper/css';
+import "swiper/css/effect-cards"
+```
+
+注意：默认导入的是core版本，如果使用其他模块需要导入并安装其他模块功能，包括Autoplay等功能
+
+```javascript
+// import Swiper core and required modules
+import SwiperCore, {
+  EffectCards,
+  Autoplay
+} from 'swiper';
+
+// install Swiper modules
+SwiperCore.use([EffectCards,Autoplay]);
+```
+
+样式：
+``` css
+/**
+容器样式
+*/
+.swiper {
+  ...
+}
+/**
+页面样式
+*/
+.swiper-slide {
+  ...
+}
+
+```
+
