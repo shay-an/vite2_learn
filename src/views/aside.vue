@@ -43,6 +43,9 @@
         <el-menu-item @click="router.push({ path:'/huolala' })" index="2-2">
           货拉拉面试题
         </el-menu-item>
+        <el-menu-item @click="router.push({ path:'/ref' })" index="2-3">
+          ref
+        </el-menu-item>
       </el-menu-item-group>
     </el-sub-menu>
     <el-sub-menu index="3">
@@ -53,6 +56,17 @@
       <el-menu-item-group title="cNode社区">
         <el-menu-item @click="router.push({ path:'/cnode/all' })" index="3-1">
           cNode
+        </el-menu-item>
+      </el-menu-item-group>
+    </el-sub-menu>
+    <el-sub-menu index="4">
+      <template #title>
+        <el-icon><location /></el-icon>
+        <span>Swiper</span>
+      </template>
+      <el-menu-item-group title="Swiper">
+        <el-menu-item @click="router.push({ path:'/swiper/first' })" index="4-1">
+          Hello world
         </el-menu-item>
       </el-menu-item-group>
     </el-sub-menu>

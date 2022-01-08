@@ -8,9 +8,10 @@
     "jsx": "preserve",
     "sourceMap": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
-    "types": ["element-plus/global"]
+    "types": ["./node_modules/element-plus/global"]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
 }

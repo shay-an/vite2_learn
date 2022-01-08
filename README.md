@@ -415,3 +415,105 @@ export default {
 1. 父盒子(box)要设置 display: flex;  flex-direction: column;前两个固定的 height: 100vh;高度必须设置
 2. 子盒子1(box1)高度必须是根据条件判断必须包括一个定高，一个auto
 3. 子盒子2(box2)必须设置flex为auto
+
+#### Swiper 轮播图
+
+组件：swiper，swiper-slide
+
+swiper 是轮播容器
+swiper-slide 是轮播的每一个页面
+
+导入：
+```javascript
+// Import Swiper Vue.js components
+import { Swiper, SwiperSlide } from 'swiper/vue';
+
+// Import Swiper styles
+import 'swiper/css';
+import "swiper/css/effect-cards"
+```
+
+注意：默认导入的是core版本，如果使用其他模块需要导入并安装其他模块功能，包括Autoplay等功能
+
+```javascript
+// import Swiper core and required modules
+import SwiperCore, {
+  EffectCards,
+  Autoplay
+} from 'swiper';
+
+// install Swiper modules
+SwiperCore.use([EffectCards,Autoplay]);
+```
+
+样式：
+``` css
+/**
+容器样式
+*/
+.swiper {
+  ...
+}
+/**
+页面样式
+*/
+.swiper-slide {
+  ...
+}
+
+```
+
+#### Teleport 组件
+
+> 官方简介大意为：正常需要组件树与DOM树是一致的，但是有的情况需要为某个功能增加一个私有的UI组件，但是该组件的真实DOM未必在这个私有组件内部。
+
+例如官方例子里的按钮有个私有的弹窗，但是该弹窗在body下更容易实现，通过声明一个Teleport内置组件，该组件支持一个prop参数to，传入的是一个css选择器，用于指定该组件将被插入到哪个DOM节点中
+
+```vue
+<template>
+  <button @click="modalOpen = true">
+        Open full screen modal! (With teleport!)
+    </button>
+
+    <teleport to="body">
+      <div v-if="modalOpen" class="modal">
+        <div>
+          I'm a teleported modal! 
+          (My parent is "body")
+          <button @click="modalOpen = false">
+            Close
+          </button>
+        </div>
+      </div>
+    </teleport>
+</template>
+
+<script lang="ts" setup>
+import { ref } from 'vue';
+const modalOpen = ref(false)
+</script>
+
+<style lang="less" scoped>
+.modal {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background-color: rgba(0,0,0,.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  width: 300px;
+  height: 300px;
+  padding: 5px;
+}
+</style>
+```

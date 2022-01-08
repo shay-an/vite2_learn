@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import modules from './global_modules'
 import Home from '../components/home/index.vue'
 
 const Router = createRouter({
@@ -14,40 +15,53 @@ const Router = createRouter({
             path: '/login',
             name: 'login',
             meta: { title: '登录' },
-            component: () => import('../components/login-component/index.vue')
+            component: modules['../components/login-component/index.vue']
         },
         {
             path: '/huolala',
             name: 'huolala',
             meta: { title: '货拉拉面试题' },
-            component: () => import('../components/huolala/index.vue')
+            component: modules['../components/huolala/index.vue']
+        },
+        {
+            path: '/ref',
+            name: 'ref',
+            meta: { title: 'ref' },
+            component: modules['../components/ref/index.vue']
         },
         {
             path: '/flex',
             name: 'flex',
             meta: { title: 'flex' },
-            component: () => import('../components/flex/index.vue'),
+            component: modules['../components/flex/index.vue'],
             children: [
                 {
                     path: '/flex/flex2',
                     name: 'flex2',
                     meta: { title: '色子布局' },
-                    component: () => import('../components/flex/flex2.vue'),
+                    component: modules['../components/flex/flex2.vue'],
                 },
             ]
+        },
+        {
+            path: '/swiper/first',
+            name: 'swiper',
+            meta: { title: 'swiper' },
+            component: modules['../components/swiper/index.vue'],
+            props: true
         },
         {
             path: '/cnode/:tabsName',
             name: 'cnodeJs',
             meta: { title: 'cnode' },
-            component: () => import('../components/cnode/index.vue'),
+            component: modules['../components/cnode/index.vue'],
             props: true
         },
         {
             path: '/cnode-topic/:id',
             name: 'cnode-topic',
             meta: { title: 'cnode-详情页' },
-            component: () => import('../components/cnode/topic/index.vue'),
+            component:  modules['../components/cnode/topic/index.vue'],
         },
         {
             path: '/:msg',
@@ -72,7 +86,7 @@ const Router = createRouter({
             path: '/404',
             name: 'PageNotExist',
             meta: { title: '404' },
-            component: () => import('../components/404/index.vue'),
+            component: modules['../components/404/index.vue'],
         },
         {
             path: "/:catchAll(.*)", // 不识别的path自动匹配404
